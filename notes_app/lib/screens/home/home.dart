@@ -3,7 +3,7 @@ import 'package:notes_app/utilities/dimensions.dart';
 
 class Home extends StatefulWidget {
   static String routeName = 'home';
-  const Home({Key? key}) : super(key: key);
+  Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();

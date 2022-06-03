@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/utilities/dimensions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUp extends StatefulWidget {
   static String routeName = 'signUp';
@@ -14,61 +15,50 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool _signUpFetching = false;
-
   final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
+  String? errorMessage;
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmedpasswordController = TextEditingController();
+  final _confirmedPasswordController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _ageController = TextEditingController();
 
-  final _auth = FirebaseAuth.instance;
-
-  String? errorMessage;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmedPasswordController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _ageController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: Dimensions.screenWidth,
-          height: Dimensions.screenHeight,
-          padding: EdgeInsets.all(Dimensions.padding20),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/login_bg.png'),
-              fit: BoxFit.cover,
-            ),
+      body: Container(
+        width: Dimensions.screenWidth,
+        height: Dimensions.screenHeight,
+        padding: EdgeInsets.all(Dimensions.padding20),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/login_bg.png'),
+            fit: BoxFit.cover,
           ),
-          child: SafeArea(
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Login Account',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                      SizedBox(
-                        width: Dimensions.width10,
-                      ),
-                      const Icon(Icons.person),
-                      Expanded(
-                        child: SizedBox(),
-                      ),
-                      CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/indian_flag.png'),
-                      ),
-                      Icon(Icons.arrow_drop_down),
-                    ],
-                  ),
                   Text(
                     ' Q-Box ',
                     style: TextStyle(
@@ -78,6 +68,114 @@ class _SignUpState extends State<SignUp> {
                   ),
                   Column(
                     children: [
+                      Padding(
+                        padding: EdgeInsets.all(Dimensions.padding20 / 2),
+                        child: TextFormField(
+                          controller: _firstNameController,
+                          keyboardType: TextInputType.text,
+                          onSaved: (value) {
+                            _firstNameController.text = value!;
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return ("Please Enter Your First Name");
+                            }
+                            return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            hintText: "First Name",
+                            fillColor: Colors.grey[100],
+                            filled: true,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(Dimensions.padding20 / 2),
+                        child: TextFormField(
+                          controller: _lastNameController,
+                          keyboardType: TextInputType.text,
+                          onSaved: (value) {
+                            _lastNameController.text = value!;
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return ("Please Enter Your Last Name");
+                            }
+                            return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            hintText: "Last Name",
+                            fillColor: Colors.grey[100],
+                            filled: true,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(Dimensions.padding20 / 2),
+                        child: TextFormField(
+                          controller: _ageController,
+                          keyboardType: TextInputType.number,
+                          onSaved: (value) {
+                            _ageController.text = value!;
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return ("Please Enter Your Age");
+                            }
+                            return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            hintText: "Age",
+                            fillColor: Colors.grey[100],
+                            filled: true,
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.all(Dimensions.padding20 / 2),
                         child: TextFormField(
@@ -163,9 +261,9 @@ class _SignUpState extends State<SignUp> {
                         padding: EdgeInsets.all(Dimensions.padding20 / 2),
                         child: TextFormField(
                           obscureText: true,
-                          controller: _confirmedpasswordController,
+                          controller: _confirmedPasswordController,
                           onSaved: (value) {
-                            _confirmedpasswordController.text = value!;
+                            _confirmedPasswordController.text = value!;
                           },
                           textInputAction: TextInputAction.done,
                           validator: (value) {
@@ -174,7 +272,7 @@ class _SignUpState extends State<SignUp> {
                               return ("Password is required for signUp");
                             }
                             if (_passwordController.text !=
-                                _confirmedpasswordController.text) {
+                                _confirmedPasswordController.text) {
                               return ("Password should be same");
                             }
                             if (!regex.hasMatch(value)) {
@@ -210,10 +308,7 @@ class _SignUpState extends State<SignUp> {
                           setState(() {
                             _signUpFetching = true;
                           });
-                          signUp(
-                            _emailController.text,
-                            _passwordController.text,
-                          );
+                          signUp();
                         },
                         child: Padding(
                           padding: EdgeInsets.all(Dimensions.padding20 / 2),
@@ -231,7 +326,7 @@ class _SignUpState extends State<SignUp> {
                                       color: Colors.white,
                                     )
                                   : Text(
-                                      "Sign In",
+                                      "Sign Up",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
@@ -260,7 +355,7 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Center(
-                        child: Text("I am Member "),
+                        child: Text("I am Member!"),
                       ),
                       TextButton(
                         onPressed: () {
@@ -280,13 +375,13 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp() async {
     if (_formKey.currentState!.validate()) {
+      final email = _emailController.text.trim();
       try {
         await _auth
             .createUserWithEmailAndPassword(
-                email: _emailController.text.trim(),
-                password: _passwordController.text.trim())
+                email: email, password: _passwordController.text.trim())
             .then((uid) => {
                   setState(() {
                     _signUpFetching = false;
@@ -294,6 +389,12 @@ class _SignUpState extends State<SignUp> {
                   Fluttertoast.showToast(msg: 'Sign Up Successful'),
                   Navigator.popAndPushNamed(context, Explore.routeName),
                 });
+        await FirebaseFirestore.instance.collection('users').doc('$email').set({
+          'firstName': _firstNameController.text.trim(),
+          'lastName': _lastNameController.text.trim(),
+          'email': _emailController.text.trim(),
+          'age': int.parse(_ageController.text.trim()),
+        });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -66,7 +65,7 @@ class _MyAppState extends State<MyApp> {
         home: AuthPath(),
         routes: {
           TabsScreen.routeName: (_) => const TabsScreen(),
-          Home.routeName: (_) => const Home(),
+          Home.routeName: (_) => Home(),
           HomeScreen.routeName: (_) => const HomeScreen(),
           Practice.routeName: (_) => const Practice(),
           BatchesScreen.routeName: (_) => const BatchesScreen(),

@@ -18,7 +18,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int curIdx = 0;
 
-  final List<Widget> _pages = const [
+  final List<Widget> _pages = [
     Home(),
     BatchesScreen(),
     HomeScreen(),
