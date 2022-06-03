@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:notes_app/screens/auth/login.dart';
 import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
@@ -14,12 +13,13 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  bool _signInFetching = false;
+  bool _signUpFetching = false;
 
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmedpasswordController = TextEditingController();
 
   final _auth = FirebaseAuth.instance;
 
@@ -132,7 +132,7 @@ class _SignUpState extends State<SignUp> {
                           validator: (value) {
                             RegExp regex = RegExp(r'^.{6,}$');
                             if (value!.isEmpty) {
-                              return ("Password is required for login");
+                              return ("Password is required for signUp");
                             }
                             if (!regex.hasMatch(value)) {
                               return ("Enter Valid Password(Min. 6 Character)");
@@ -159,16 +159,61 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.all(Dimensions.padding20 / 2),
+                        child: TextFormField(
+                          obscureText: true,
+                          controller: _confirmedpasswordController,
+                          onSaved: (value) {
+                            _confirmedpasswordController.text = value!;
+                          },
+                          textInputAction: TextInputAction.done,
+                          validator: (value) {
+                            RegExp regex = RegExp(r'^.{6,}$');
+                            if (value!.isEmpty) {
+                              return ("Password is required for signUp");
+                            }
+                            if (_passwordController.text !=
+                                _confirmedpasswordController.text) {
+                              return ("Password should be same");
+                            }
+                            if (!regex.hasMatch(value)) {
+                              return ("Enter Valid Password(Min. 6 Character)");
+                            }
+                          },
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            hintText: "confirm password",
+                            fillColor: Colors.grey[100],
+                            filled: true,
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 40,
                       ),
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            _signInFetching = true;
+                            _signUpFetching = true;
                           });
                           signUp(
-                              _emailController.text, _passwordController.text);
+                            _emailController.text,
+                            _passwordController.text,
+                          );
                         },
                         child: Padding(
                           padding: EdgeInsets.all(Dimensions.padding20 / 2),
@@ -181,7 +226,7 @@ class _SignUpState extends State<SignUp> {
                                   Dimensions.borderRadius5),
                             ),
                             child: Center(
-                              child: _signInFetching
+                              child: _signUpFetching
                                   ? CircularProgressIndicator(
                                       color: Colors.white,
                                     )
@@ -219,7 +264,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.popAndPushNamed(context, Login.routeName);
+                          Navigator.pop(context);
                         },
                         child: Text('LogIn'),
                       ),
@@ -239,14 +284,14 @@ class _SignUpState extends State<SignUp> {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
-            .signInWithEmailAndPassword(
-                email: _emailController.text,
-                password: _passwordController.text)
+            .createUserWithEmailAndPassword(
+                email: _emailController.text.trim(),
+                password: _passwordController.text.trim())
             .then((uid) => {
                   setState(() {
-                    _signInFetching = false;
+                    _signUpFetching = false;
                   }),
-                  Fluttertoast.showToast(msg: 'Sign In Successful'),
+                  Fluttertoast.showToast(msg: 'Sign Up Successful'),
                   Navigator.popAndPushNamed(context, Explore.routeName),
                 });
       } on FirebaseAuthException catch (error) {
@@ -276,7 +321,7 @@ class _SignUpState extends State<SignUp> {
       }
     }
     setState(() {
-      _signInFetching = false;
+      _signUpFetching = false;
     });
   }
 }

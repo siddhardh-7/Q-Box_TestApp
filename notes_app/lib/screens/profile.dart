@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/auth/auth_path.dart';
+import 'package:notes_app/screens/auth/login.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 class Profile extends StatefulWidget {
@@ -12,7 +14,13 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser;
+
+  Future<void> _signOut() async {
+    await _auth.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +47,8 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    backgroundImage:
-                        AssetImage('notes_app/assets/images/user.jpg'),
+                    // backgroundImage:
+                    //     AssetImage("notes_app/assets/images/user.jpg"),
                     radius: 50,
                   ),
                   Column(
@@ -112,8 +120,10 @@ class _ProfileState extends State<Profile> {
               title: Text('Blogs'),
             ),
             MaterialButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
+              onPressed: () async {
+                await _signOut();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AuthPath.routeName, (route) => false);
               },
               color: Theme.of(context).primaryColor,
               child: Text('Sign Out'),

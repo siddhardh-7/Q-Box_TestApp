@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/bin/video_player.dart';
+import 'package:notes_app/screens/auth/auth_path.dart';
 import 'package:notes_app/screens/auth/login.dart';
 import 'package:notes_app/screens/auth/signUp.dart';
 import 'package:notes_app/screens/explore.dart';
@@ -34,9 +35,14 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -57,16 +63,7 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(0xFFFFC600),
           primarySwatch: Colors.amber,
         ),
-        home: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return TabsScreen();
-            } else {
-              return Login();
-            }
-          },
-        ),
+        home: AuthPath(),
         routes: {
           TabsScreen.routeName: (_) => const TabsScreen(),
           Home.routeName: (_) => const Home(),
@@ -89,6 +86,7 @@ class MyApp extends StatelessWidget {
           SignUp.routeName: (_) => SignUp(),
           Explore.routeName: (_) => Explore(),
           Profile.routeName: (_) => Profile(),
+          AuthPath.routeName: (_) => AuthPath(),
         },
       ),
     );

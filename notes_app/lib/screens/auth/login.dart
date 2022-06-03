@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/screens/auth/signUp.dart';
-import 'package:notes_app/screens/explore.dart';
+import 'package:notes_app/screens/tabs_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 class Login extends StatefulWidget {
@@ -219,7 +219,7 @@ class _LoginState extends State<Login> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.popAndPushNamed(context, SignUp.routeName);
+                          Navigator.pushNamed(context, SignUp.routeName);
                         },
                         child: Text('Create Account'),
                       ),
@@ -240,14 +240,14 @@ class _LoginState extends State<Login> {
       try {
         await _auth
             .signInWithEmailAndPassword(
-                email: _emailController.text,
-                password: _passwordController.text)
+                email: _emailController.text.trim(),
+                password: _passwordController.text.trim())
             .then((uid) => {
                   setState(() {
                     _signInFetching = false;
                   }),
                   Fluttertoast.showToast(msg: 'Sign In Successful'),
-                  Navigator.popAndPushNamed(context, Explore.routeName),
+                  Navigator.popAndPushNamed(context, TabsScreen.routeName),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
