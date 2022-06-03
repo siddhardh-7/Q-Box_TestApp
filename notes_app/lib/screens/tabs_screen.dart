@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/home/home.dart';
+import 'package:notes_app/screens/profile.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 import '../screens/batches/batches_screen.dart';
@@ -74,12 +75,17 @@ class _TabsScreenState extends State<TabsScreen> {
                   color: Colors.black,
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(right: Dimensions.padding20),
-                child: const CircleAvatar(
-                  radius: 16,
-                  backgroundImage: AssetImage('assets/images/user.jpg'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Profile.routeName);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(right: Dimensions.padding20),
+                  child: CircleAvatar(
+                    radius: Dimensions.width10 * 1.6,
+                    backgroundImage: AssetImage('assets/images/user.jpg'),
+                  ),
                 ),
               ),
             ],

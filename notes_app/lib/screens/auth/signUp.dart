@@ -1,19 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:notes_app/screens/auth/signUp.dart';
+import 'package:notes_app/screens/auth/login.dart';
 import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
-class Login extends StatefulWidget {
-  static String routeName = 'login';
-  Login({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  static String routeName = 'signUp';
+  SignUp({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   bool _signInFetching = false;
 
   final _formKey = GlobalKey<FormState>();
@@ -167,7 +167,7 @@ class _LoginState extends State<Login> {
                           setState(() {
                             _signInFetching = true;
                           });
-                          signIn(
+                          signUp(
                               _emailController.text, _passwordController.text);
                         },
                         child: Padding(
@@ -215,13 +215,13 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Center(
-                        child: Text("Not Yet Register?"),
+                        child: Text("I am Member "),
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.popAndPushNamed(context, SignUp.routeName);
+                          Navigator.popAndPushNamed(context, Login.routeName);
                         },
-                        child: Text('Create Account'),
+                        child: Text('LogIn'),
                       ),
                     ],
                   ),
@@ -235,7 +235,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<void> signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
@@ -273,9 +273,6 @@ class _LoginState extends State<Login> {
             errorMessage = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        setState(() {
-          _signInFetching = false;
-        });
       }
     }
     setState(() {

@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/bin/video_player.dart';
 import 'package:notes_app/screens/auth/login.dart';
+import 'package:notes_app/screens/auth/signUp.dart';
 import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/home/home_screen.dart';
+import 'package:notes_app/screens/profile.dart';
 import 'package:provider/provider.dart';
 
 import './screens/tabs_screen.dart';
@@ -52,8 +55,18 @@ class MyApp extends StatelessWidget {
             TargetPlatform.android: ZoomPageTransitionsBuilder(),
           }),
           primaryColor: const Color(0xFFFFC600),
+          primarySwatch: Colors.amber,
         ),
-        home: Login(),
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return TabsScreen();
+            } else {
+              return Login();
+            }
+          },
+        ),
         routes: {
           TabsScreen.routeName: (_) => const TabsScreen(),
           Home.routeName: (_) => const Home(),
@@ -73,7 +86,9 @@ class MyApp extends StatelessWidget {
           CompletedTestsScreen.routeName: (_) => const CompletedTestsScreen(),
           DefaultPlayer.routeName: (_) => const DefaultPlayer(),
           Login.routeName: (_) => Login(),
+          SignUp.routeName: (_) => SignUp(),
           Explore.routeName: (_) => Explore(),
+          Profile.routeName: (_) => Profile(),
         },
       ),
     );
