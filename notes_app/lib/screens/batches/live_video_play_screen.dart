@@ -1,4 +1,7 @@
 import 'package:flick_video_player/flick_video_player.dart';
+import 'package:notes_app/screens/tabs_screen.dart';
+import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/appbar_actions.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:video_player/video_player.dart';
@@ -44,55 +47,48 @@ class _LiveVideoPlayScreenState extends State<LiveVideoPlayScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(left: Dimensions.padding20),
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: TextButton(
+              onPressed: () {
+                Navigator.popAndPushNamed(context, TabsScreen.routeName);
+              },
+              child: Text(
+                'Live Video',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          AppBarProfileIcon(),
+        ],
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
+            padding: EdgeInsets.only(
+              left: Dimensions.padding20 * (3 / 4),
+              right: Dimensions.padding20 * (3 / 4),
+              top: Dimensions.padding20 * (3 / 2),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Text(
-                      'Live Video',
-                      style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(DefaultPlayer.routeName);
-                      },
-                      // padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.cast_rounded),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      // padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.notifications_outlined),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      // padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.search),
-                    ),
-                    const CircleAvatar(
-                      radius: 15.0,
-                      child: Icon(Icons.person),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 Container(
-                  height: 250,
-                  padding: const EdgeInsets.all(5.0),
+                  height: Dimensions.height10 * 25,
+                  padding: EdgeInsets.all(Dimensions.padding20 / 4),
                   child: FlickVideoPlayer(
                     flickManager: flickManager,
                     flickVideoWithControls: FlickVideoWithControls(
@@ -103,15 +99,18 @@ class _LiveVideoPlayScreenState extends State<LiveVideoPlayScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: Dimensions.height10 * 2,
                 ),
                 Text(
                   'Live Chat',
                   style: HelperFunctions.textStyleCard(),
                 ),
+                SizedBox(
+                  height: Dimensions.height10,
+                ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(Dimensions.padding20 / 2.5),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: CupertinoTextField(
@@ -125,10 +124,12 @@ class _LiveVideoPlayScreenState extends State<LiveVideoPlayScreen> {
                       strutStyle: const StrutStyle(
                         fontFamily: 'Quicksand',
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 25.0, vertical: 12.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimensions.width10 * 2.5,
+                          vertical: Dimensions.height10 * 1.2),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.borderRadius5 * 2),
                         color: theme.cardColor,
                         boxShadow: [
                           BoxShadow(
@@ -146,7 +147,7 @@ class _LiveVideoPlayScreenState extends State<LiveVideoPlayScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: Dimensions.height10,
                 ),
                 Expanded(
                   child: ListView.builder(

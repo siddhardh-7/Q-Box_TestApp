@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/appbar_actions.dart';
 
 import './live_classes_screen.dart';
 
@@ -23,42 +25,34 @@ class TeacherDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: FittedBox(
+          child: Text(
+            routeArgs['batchName'],
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: [
+          AppBarProfileIcon(),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
+          padding: EdgeInsets.only(
+              left: Dimensions.width10 * 1.5,
+              right: Dimensions.width10 * 1.5,
+              top: Dimensions.height10 * 3),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(Icons.keyboard_arrow_left_rounded),
-                    ),
-                    Text(
-                      routeArgs['batchName'],
-                      style: const TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                    const Spacer(),
-                    const CircleAvatar(
-                      radius: 15.0,
-                      child: Icon(Icons.person),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: teacherDetails.entries
                       .map(
                         (entry) => Padding(
-                          padding: const EdgeInsets.all(6.0),
+                          padding: EdgeInsets.all(Dimensions.padding20 / 3.33),
                           child: Text(
                             '${entry.key} : ${entry.value}',
                             style: HelperFunctions.textStyleCard(),
@@ -68,8 +62,8 @@ class TeacherDetailsScreen extends StatelessWidget {
                       )
                       .toList(),
                 ),
-                const SizedBox(
-                  height: 60,
+                SizedBox(
+                  height: Dimensions.height10 * 6,
                 ),
                 CustomButtonFull(
                   backColor: Colors.purple,
@@ -79,8 +73,8 @@ class TeacherDetailsScreen extends StatelessWidget {
                   },
                   text: 'Live Classes',
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: Dimensions.height10 * 2,
                 ),
                 CustomButtonFull(
                   backColor: Colors.orange,

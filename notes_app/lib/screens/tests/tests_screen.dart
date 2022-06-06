@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
 
 import './full_length_tests_screen.dart';
 import './level_up_screen.dart';
@@ -14,28 +15,21 @@ class TestsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
+          padding: EdgeInsets.symmetric(
+              horizontal: Dimensions.width10 * 1.5,
+              vertical: Dimensions.height10 * 3),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: const [
-                  Text(
-                    'Tests',
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(Icons.person),
-                  )
-                ],
+              Text(
+                'Tests',
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 240,
+              SizedBox(
+                height: Dimensions.height10 * 3,
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(Dimensions.padding20),
                 child: CustomButtonFull(
                   backColor: Colors.purple,
                   onTaphandler: () {
@@ -45,11 +39,11 @@ class TestsScreen extends StatelessWidget {
                   text: 'Level up series',
                 ),
               ),
-              const SizedBox(
-                height: 24,
-              ),
+              //  SizedBox(
+              //   height: 24,
+              // ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(Dimensions.padding20),
                 child: CustomButtonFull(
                   backColor: Colors.orange,
                   onTaphandler: () {

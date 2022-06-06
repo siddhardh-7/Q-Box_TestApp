@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/appbar_actions.dart';
 
 import './live_video_play_screen.dart';
 
@@ -10,46 +12,34 @@ class LiveClassesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        leadingWidth: 14 * Dimensions.width10,
+        leading: Padding(
+          padding: EdgeInsets.only(left: Dimensions.width10),
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              'Live Classes',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          AppBarActions(),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
+          padding: EdgeInsets.only(
+            left: Dimensions.padding20 * (3 / 4),
+            right: Dimensions.padding20 * (3 / 4),
+            top: Dimensions.padding20,
+          ),
           child: Column(
             children: [
-              Row(
-                children: [
-                  const Text(
-                    'Live Classes',
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    // padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    icon: const Icon(Icons.cast_rounded),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    // padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    icon: const Icon(Icons.notifications_outlined),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    // padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    icon: const Icon(Icons.search),
-                  ),
-                  const CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(Icons.person),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: 3,
@@ -59,18 +49,21 @@ class LiveClassesScreen extends StatelessWidget {
                         Navigator.of(context)
                             .pushNamed(LiveVideoPlayScreen.routeName);
                       },
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(
+                          Dimensions.borderRadius12 * (2 / 3)),
                       child: Container(
-                        height: 130,
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        padding: const EdgeInsets.all(2.0),
+                        height: Dimensions.height10 * 13,
+                        margin:
+                            EdgeInsets.symmetric(vertical: Dimensions.height10),
+                        padding: EdgeInsets.all(Dimensions.padding20 / 10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(
+                              Dimensions.borderRadius5 * 3),
                         ),
                         child: Stack(
                           children: [
                             SizedBox(
-                              height: 100,
+                              height: Dimensions.height10 * 10,
                               child: Image.asset(
                                 'assets/images/thumbnail.png',
                               ),

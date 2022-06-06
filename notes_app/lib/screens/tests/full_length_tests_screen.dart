@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/appbar_actions.dart';
 
 import '../../helpers/helpers.dart';
 import './completed_tests_screen.dart';
@@ -12,37 +14,36 @@ class FullLengthTestsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: FittedBox(
+          child: Text(
+            'Full Length Tests',
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: [
+          AppBarProfileIcon(),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
+          padding: EdgeInsets.only(
+              left: Dimensions.width15,
+              right: Dimensions.width15,
+              top: Dimensions.height10 * 3),
           child: Column(
             children: [
-              Row(
-                children: const [
-                  Text(
-                    'Full Length Tests',
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(Icons.person),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed(LiveTestsScreen.routeName);
                 },
                 child: Container(
-                  height: 200,
+                  height: Dimensions.height10 * 20,
                   decoration: BoxDecoration(
                     color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.borderRadius15),
                   ),
                   child: Center(
                     child: Text(
@@ -52,17 +53,18 @@ class FullLengthTestsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: Dimensions.height10 * 2,
               ),
               GestureDetector(
                 onTap: () => Navigator.of(context)
                     .pushNamed(CompletedTestsScreen.routeName),
                 child: Container(
-                  height: 200,
+                  height: Dimensions.height10 * 20,
                   decoration: BoxDecoration(
                     color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.borderRadius15),
                   ),
                   child: Center(
                     child: Text(

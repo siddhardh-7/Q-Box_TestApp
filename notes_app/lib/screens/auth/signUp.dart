@@ -377,11 +377,11 @@ class _SignUpState extends State<SignUp> {
 
   Future<void> signUp() async {
     if (_formKey.currentState!.validate()) {
-      final email = _emailController.text.trim();
+      final _email = _emailController.text.trim();
       try {
         await _auth
             .createUserWithEmailAndPassword(
-                email: email, password: _passwordController.text.trim())
+                email: _email, password: _passwordController.text.trim())
             .then((uid) => {
                   setState(() {
                     _signUpFetching = false;
@@ -389,26 +389,19 @@ class _SignUpState extends State<SignUp> {
                   Fluttertoast.showToast(msg: 'Sign Up Successful'),
                   Navigator.popAndPushNamed(context, Explore.routeName),
                 });
-        await FirebaseFirestore.instance.collection('users').doc('$email').set({
-          'firstName': _firstNameController.text.trim(),
-          'lastName': _lastNameController.text.trim(),
-          'email': _emailController.text.trim(),
-          'age': int.parse(_ageController.text.trim()),
-        });
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc('${_email}')
+            .set({
+              'firstName': _firstNameController.text.trim(),
+              'lastName': _lastNameController.text.trim(),
+              'email': _emailController.text.trim(),
+              'age': int.parse(_ageController.text.trim()),
+            })
+            .then((value) => print("User Added"))
+            .catchError((error) => print("Failed to add user: $error"));
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
-            break;
-          case "wrong-password":
-            errorMessage = "Your password is wrong.";
-            break;
-          case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
-            break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
-            break;
           case "too-many-requests":
             errorMessage = "Too many requests";
             break;

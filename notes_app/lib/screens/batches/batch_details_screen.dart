@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/appbar_actions.dart';
 
 import './teacher_details_screen.dart';
 import './teacher_profile_card.dart';
@@ -20,35 +22,26 @@ class BatcheDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: FittedBox(
+          child: Text(
+            routeArgs['batchName'],
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: [
+          AppBarProfileIcon(),
+        ],
+      ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: Dimensions.width10 * 1.5,
+                vertical: Dimensions.height10),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(Icons.keyboard_arrow_left_rounded),
-                    ),
-                    Text(
-                      routeArgs['batchName'],
-                      style: const TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                    const Spacer(),
-                    const CircleAvatar(
-                      radius: 15.0,
-                      child: Icon(Icons.person),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 for (int i = 0; i < _teacherNames.length; i++)
                   TeacherProfileCard(
                       text: _teacherNames[i],

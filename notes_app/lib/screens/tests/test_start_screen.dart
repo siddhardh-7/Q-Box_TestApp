@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -35,45 +36,35 @@ class _TestStartScreenState extends State<TestStartScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: FittedBox(
+          child: Text(
+            'Test Name',
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 18.0, right: 18.0, top: 15.0),
+            Container(
+              margin: EdgeInsets.only(
+                  left: Dimensions.width10 * 1.8,
+                  right: Dimensions.width10 * 1.8,
+                  top: Dimensions.height10),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          padding: const EdgeInsets.all(0.0),
-                          splashRadius: 25.0,
-                          icon: const Icon(Icons.keyboard_arrow_left_rounded),
-                        ),
-                        const Text(
-                          'Test Name',
-                          style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.bold),
-                        ),
-                        const Spacer(),
-                        const CircleAvatar(
-                          radius: 15.0,
-                          child: Icon(Icons.person),
-                        )
-                      ],
-                    ),
                     Card(
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.borderRadius15),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: EdgeInsets.all(Dimensions.padding20 * 0.75),
                         child: Text(
                           '${questionNumber + 1}.  ${questions[questionNumber].question}',
                           style: HelperFunctions.textstyle(),
@@ -81,8 +72,8 @@ class _TestStartScreenState extends State<TestStartScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: Dimensions.height10,
                     ),
                     for (int i = 0; i < 4; i++)
                       InkWell(
@@ -115,12 +106,14 @@ class _TestStartScreenState extends State<TestStartScreen> {
                             }
                           }
                         },
-                        borderRadius: BorderRadius.circular(6.0),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.borderRadius5),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 375),
-                          padding: const EdgeInsets.all(10.0),
+                          padding: EdgeInsets.all(Dimensions.padding20 / 2),
                           width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 5.0),
+                          margin: EdgeInsets.symmetric(
+                              vertical: Dimensions.height10 / 2),
                           child: Text(
                             questions[questionNumber].options[i],
                             style: isOptionChosen
@@ -151,15 +144,17 @@ class _TestStartScreenState extends State<TestStartScreen> {
                           ),
                         ),
                       ),
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: Dimensions.height10 * 2.5,
                     ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
+                      borderRadius:
+                          BorderRadius.circular(Dimensions.borderRadius15),
                       child: Container(
-                        height: 122,
+                        height: Dimensions.height10 * 12,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.borderRadius15),
                         ),
                         child: Scrollbar(
                           child: GridView.builder(
@@ -174,9 +169,11 @@ class _TestStartScreenState extends State<TestStartScreen> {
                             itemBuilder: (_, idx) {
                               return Scrollbar(
                                 child: Container(
-                                  margin: const EdgeInsets.all(3.0),
+                                  margin: EdgeInsets.all(
+                                      Dimensions.padding20 * (3 / 20)),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100.0),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.borderRadius5 * 20),
                                     color: HelperFunctions.getColorTests(
                                         _allSelectedChoices[idx]),
                                   ),
@@ -187,8 +184,8 @@ class _TestStartScreenState extends State<TestStartScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
+                    SizedBox(
+                      height: Dimensions.height10 * 1.5,
                     ),
                     Row(
                       children: [
@@ -213,8 +210,8 @@ class _TestStartScreenState extends State<TestStartScreen> {
                         const Spacer(),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: Dimensions.height10,
                     ),
                     Row(
                       children: [
@@ -248,8 +245,8 @@ class _TestStartScreenState extends State<TestStartScreen> {
                         const Spacer(),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: Dimensions.height10,
                     ),
                   ],
                 ),
@@ -266,11 +263,12 @@ class _TestStartScreenState extends State<TestStartScreen> {
                   ? Center(
                       child: Container(
                         margin: const EdgeInsets.all(15.0),
-                        height: 220,
+                        height: Dimensions.height10 * 22,
                         width: double.infinity,
                         child: _controller!.value.isInitialized
                             ? ClipRRect(
-                                borderRadius: BorderRadius.circular(15.0),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.borderRadius15),
                                 child: Stack(
                                   fit: StackFit.expand,
                                   children: [
@@ -280,8 +278,8 @@ class _TestStartScreenState extends State<TestStartScreen> {
                                       child: VideoPlayer(_controller!),
                                     ),
                                     Positioned(
-                                      bottom: 5.0,
-                                      left: 5.0,
+                                      bottom: Dimensions.height10 / 2,
+                                      left: Dimensions.width10 / 2,
                                       child: IconButton(
                                         onPressed: () {
                                           setState(() {
@@ -312,8 +310,8 @@ class _TestStartScreenState extends State<TestStartScreen> {
             ),
             if (isVideoSolenabled)
               Positioned(
-                top: 15.0,
-                right: 15.0,
+                top: Dimensions.height10 * 1.5,
+                right: Dimensions.width15,
                 child: IconButton(
                   icon: const Icon(
                     Icons.close,
@@ -346,7 +344,7 @@ void showCustomSnackbar({
       elevation: 5.0,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(Dimensions.borderRadius12),
       ),
       duration: const Duration(seconds: 1),
       content: Row(
@@ -355,8 +353,8 @@ void showCustomSnackbar({
             icon,
             color: Colors.white,
           ),
-          const SizedBox(
-            width: 20,
+          SizedBox(
+            width: Dimensions.width10 * 2,
           ),
           Text(text),
         ],

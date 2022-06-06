@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/appbar_actions.dart';
 
 import '../../helpers/helpers.dart';
 import '../../widgets/custom_button.dart';
@@ -22,28 +24,26 @@ class LevelUptestsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: FittedBox(
+          child: Text(
+            'Level Up Tests',
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: [
+          AppBarProfileIcon(),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
+          padding: EdgeInsets.only(
+              left: Dimensions.width10 * 1.5,
+              right: Dimensions.width10 * 1.5,
+              top: Dimensions.height10 * 3),
           child: Column(
             children: [
-              Row(
-                children: const [
-                  Text(
-                    'Level Up Tests',
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(Icons.person),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               Row(
                 children: [
                   const Spacer(),
@@ -61,21 +61,26 @@ class LevelUptestsScreen extends StatelessWidget {
                   const Spacer()
                 ],
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: Dimensions.height10 * 2,
               ),
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.borderRadius12),
                 ),
                 color: Colors.white,
                 elevation: 4.0,
-                margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                margin:
+                    EdgeInsets.symmetric(horizontal: Dimensions.width10 * 1.5),
                 child: ExpansionTile(
-                  childrenPadding: const EdgeInsets.only(
-                      bottom: 15.0, left: 20.0, right: 20.0),
-                  title: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  childrenPadding: EdgeInsets.only(
+                      bottom: Dimensions.height10 * 1.5,
+                      left: Dimensions.width10 * 2,
+                      right: Dimensions.width10 * 2),
+                  title: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.width10 * 1.5),
                     child: Text('Chapter 1'),
                   ),
                   children: _chapter1.entries
@@ -91,10 +96,11 @@ class LevelUptestsScreen extends StatelessWidget {
                                 backgroundColor:
                                     HelperFunctions.getColortestsLevel(
                                         entry.value),
-                                radius: 10.0),
+                                radius: Dimensions.borderRadius5 * 2),
                             enabled: true,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius5 * 3),
                             ),
                             onTap: () {},
                             trailing:
@@ -103,23 +109,29 @@ class LevelUptestsScreen extends StatelessWidget {
                       .toList(),
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: Dimensions.height10 * 2,
               ),
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.borderRadius5 * 3),
                 ),
                 color: Colors.white,
                 elevation: 4.0,
-                margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                margin:
+                    EdgeInsets.symmetric(horizontal: Dimensions.width10 * 1.5),
                 child: IgnorePointer(
                   ignoring: true,
                   child: ExpansionTile(
-                    childrenPadding: const EdgeInsets.only(
-                        bottom: 15.0, left: 20.0, right: 20.0),
-                    title: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    childrenPadding: EdgeInsets.only(
+                      bottom: Dimensions.height10 * 1.5,
+                      left: Dimensions.width10 * 2,
+                      right: Dimensions.width10 * 2,
+                    ),
+                    title: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimensions.width10 * 1.5),
                       child: Text('Chapter 2  (Locked)'),
                     ),
                     children: _chapter2.entries
@@ -135,10 +147,11 @@ class LevelUptestsScreen extends StatelessWidget {
                                   backgroundColor:
                                       HelperFunctions.getColortestsLevel(
                                           entry.value),
-                                  radius: 10.0),
+                                  radius: Dimensions.borderRadius12),
                               enabled: true,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.borderRadius5 * 3),
                               ),
                               onTap: () {},
                               trailing: const Icon(

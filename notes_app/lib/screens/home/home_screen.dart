@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
 
 import '../../screens/home/practice_screen.dart';
 import '../../widgets/custom_button.dart';
@@ -20,39 +21,36 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
+          padding: EdgeInsets.symmetric(
+              horizontal: Dimensions.width15,
+              vertical: Dimensions.height10 * 2),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: const [
-                  Text(
-                    'Question Bank',
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(Icons.person),
-                  )
-                ],
+              Text(
+                'Question Bank',
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 30.0,
+              SizedBox(
+                height: Dimensions.height10 * 3,
               ),
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.borderRadius15),
                 ),
                 color: Colors.white,
                 elevation: 4.0,
                 borderOnForeground: false,
-                margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                margin: EdgeInsets.symmetric(horizontal: Dimensions.width15),
                 child: ExpansionTile(
-                  childrenPadding: const EdgeInsets.only(
-                      bottom: 15.0, left: 20.0, right: 20.0),
-                  title: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  childrenPadding: EdgeInsets.only(
+                      bottom: Dimensions.height10 * 1.5,
+                      left: Dimensions.width10 * 2,
+                      right: Dimensions.width10 * 2),
+                  title: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: Dimensions.width15),
                     child: Text('Select Subject'),
                   ),
                   children: [
@@ -66,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       enabled: true,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.borderRadius15),
                       ),
                       onTap: () {},
                       trailing: const Icon(Icons.keyboard_arrow_right_rounded),
@@ -81,7 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       enabled: true,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.borderRadius15),
                       ),
                       onTap: () {},
                       trailing: const Icon(Icons.keyboard_arrow_right_rounded),
@@ -96,7 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       enabled: true,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.borderRadius15),
                       ),
                       onTap: () {},
                       trailing: const Icon(Icons.keyboard_arrow_right_rounded),
@@ -104,21 +105,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: Dimensions.height10 * 3,
               ),
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.borderRadius15),
                 ),
                 color: Colors.white,
                 elevation: 4.0,
-                margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                margin: EdgeInsets.symmetric(horizontal: Dimensions.width15),
                 child: ExpansionTile(
-                  childrenPadding: const EdgeInsets.only(
-                      bottom: 15.0, left: 20.0, right: 20.0),
-                  title: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  childrenPadding: EdgeInsets.only(
+                      bottom: Dimensions.height10 * 1.5,
+                      left: Dimensions.width10 * 2,
+                      right: Dimensions.width10 * 2),
+                  title: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: Dimensions.width15),
                     child: Text('Select Chapter'),
                   ),
                   children: [
@@ -132,7 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       enabled: true,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.borderRadius15),
                       ),
                       onTap: () {
                         Navigator.of(context).pushNamed(Practice.routeName);
@@ -146,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
+                  padding: EdgeInsets.only(bottom: Dimensions.height10),
                   child: CustomButton(
                     backColor: const Color(0xff0CBC8B),
                     onTaphandler: () {

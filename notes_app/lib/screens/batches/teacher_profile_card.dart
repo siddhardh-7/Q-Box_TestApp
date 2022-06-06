@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
 
 import '../../widgets/custom_button.dart';
 
@@ -15,8 +16,10 @@ class TeacherProfileCard extends StatelessWidget {
     return Container(
       height: 250,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(
+          horizontal: Dimensions.width10 * 1.5,
+          vertical: Dimensions.height10 * 2),
+      margin: EdgeInsets.symmetric(vertical: Dimensions.height10),
       decoration: BoxDecoration(
         color: Colors.grey,
         borderRadius: BorderRadius.circular(15.0),

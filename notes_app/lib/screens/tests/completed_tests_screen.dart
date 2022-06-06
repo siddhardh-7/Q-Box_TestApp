@@ -10,28 +10,20 @@ class CompletedTestsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: FittedBox(
+          child: Text(
+            'Completed Tests',
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
           child: Column(
             children: [
-              Row(
-                children: const [
-                  Text(
-                    'Completed Tests',
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(Icons.person),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ListTile(

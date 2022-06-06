@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/appbar_actions.dart';
 
 import './test_start_screen.dart';
 
@@ -11,14 +13,14 @@ class LiveTestsScreen extends StatelessWidget {
 
   final PageController _pageController = PageController();
 
-  Column page1() {
+  Column page1(BuildContext context) {
     return Column(
       children: [
         Container(
-          height: 80,
+          height: Dimensions.height10 * 8,
           decoration: BoxDecoration(
             color: Colors.yellow,
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(Dimensions.borderRadius15),
           ),
           child: Center(
             child: Text(
@@ -27,13 +29,13 @@ class LiveTestsScreen extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 25,
+        SizedBox(
+          height: Dimensions.height10 * 2.5,
         ),
         Align(
-          alignment: Alignment.centerRight,
+          alignment: Alignment.center,
           child: CustomButton(
-            backColor: Colors.grey,
+            backColor: Theme.of(context).primaryColor,
             onTaphandler: () {
               _pageController.animateToPage(2,
                   duration: const Duration(milliseconds: 500),
@@ -50,10 +52,10 @@ class LiveTestsScreen extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 500,
+          height: Dimensions.height10 * 50,
           decoration: BoxDecoration(
             color: Colors.yellow,
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(Dimensions.borderRadius15),
           ),
           child: Center(
             child: Text(
@@ -62,13 +64,13 @@ class LiveTestsScreen extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 35,
+        SizedBox(
+          height: Dimensions.height10 * 3.5,
         ),
         Align(
-          alignment: Alignment.centerRight,
+          alignment: Alignment.center,
           child: CustomButton(
-            backColor: Colors.grey,
+            backColor: Theme.of(context).primaryColor,
             onTaphandler: () {
               Navigator.of(context).pushNamed(TestStartScreen.routeName);
             },
@@ -83,46 +85,42 @@ class LiveTestsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: FittedBox(
+          child: Text(
+            'Live Tests',
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: [
+          AppBarProfileIcon(),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 30.0),
-          child: Column(
-            children: [
-              Row(
-                children: const [
-                  Text(
-                    'Live Tests',
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height - 130,
+                  child: PageView(
+                    controller: _pageController,
+                    children: [
+                      page1(context),
+                      page2(context),
+                    ],
                   ),
-                  Spacer(),
-                  CircleAvatar(
-                    radius: 15.0,
-                    child: Icon(Icons.person),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height - 130,
-                child: PageView(
-                  controller: _pageController,
-                  children: [
-                    page1(),
-                    page2(context),
-                  ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
 
 /*
 Container(
@@ -149,12 +147,4 @@ Container(
                           text: 'Take test',
                         ),
                       )
-
-
-
-
-
-
-
-
 */
