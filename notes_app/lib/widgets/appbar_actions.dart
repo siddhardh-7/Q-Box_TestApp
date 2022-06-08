@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/profile.dart';
 import 'package:notes_app/utilities/dimensions.dart';
@@ -48,6 +50,18 @@ class AppBarActions extends StatelessWidget {
 }
 
 class AppBarProfileIcon extends StatelessWidget {
+  Future<String> getUserImagePath() async {
+    final user = await FirebaseAuth.instance.currentUser;
+    String userEmail = user!.email.toString();
+    print(userEmail);
+    final userRef = await FirebaseStorage.instance.ref();
+    String urlPath = 'users/${userEmail}/userProfile.jpeg';
+    final userProfileUrl = await userRef.child(urlPath).getDownloadURL();
+    print(userProfileUrl);
+
+    return userProfileUrl;
+  }
+
   const AppBarProfileIcon({
     Key? key,
   }) : super(key: key);

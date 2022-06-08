@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/provider/get_user_details.dart';
 import 'package:notes_app/helpers/auth_path.dart';
@@ -17,33 +21,72 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser;
+  final userProfileUrlRef = FirebaseStorage.instance.ref();
 
   Future<void> _signOut() async {
     await _auth.signOut();
   }
 
-  UserPerson fromJson(Map<String, dynamic> json) => UserPerson(
-        email: json['email'],
-        firstName: json['firstName'],
-        lastName: json['lastName'],
-        age: json['age'],
-      );
+  // UserPerson fromJson(Map<String, dynamic> json) => UserPerson(
+  //       email: json['email'],
+  //       firstName: json['firstName'],
+  //       lastName: json['lastName'],
+  //       age: json['age'],
+  //     );
+  //
+  // Future<UserPerson?> getDocId() async {
+  //   final docUser = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(user.toString());
+  //   final snapshot = await docUser.get();
+  //   if (snapshot.exists) {
+  //     return fromJson(snapshot.data()!);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
-  Future<UserPerson?> getDocId() async {
-    final docUser = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.toString());
-    final snapshot = await docUser.get();
-    if (snapshot.exists) {
-      return fromJson(snapshot.data()!);
-    } else {
+  Future uploadProfile() async {
+    final results = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      allowedExtensions: ['jpg', 'png'],
+      type: FileType.custom,
+    );
+    if (results == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('No File Selected'),
+      ));
       return null;
     }
+    final path = results.files.single.path;
+    File file = File(path!);
+    String userEmail = user!.email.toString();
+    final userProfileUrl =
+        userProfileUrlRef.child('users/$userEmail/UserProfile.jpg');
+    await userProfileUrl.putFile(file).snapshotEvents.listen((taskSnapshot) {
+      switch (taskSnapshot.state) {
+        case TaskState.running:
+          break;
+        case TaskState.paused:
+          // ...;
+          break;
+        case TaskState.success:
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('successfully uploaded')));
+          break;
+        case TaskState.canceled:
+          // ...
+          break;
+        case TaskState.error:
+          print(taskSnapshot.toString());
+          break;
+      }
+    });
   }
 
   @override
   void initState() {
-    getDocId();
+    // getDocId();
     super.initState();
   }
 
@@ -75,13 +118,45 @@ class _ProfileState extends State<Profile> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(
-                            "notes_app/assets/images/indian_flag.png"),
-                        radius: 50,
+                      Container(
+                        width: Dimensions.width10 * 12,
+                        height: Dimensions.width10 * 10,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: Dimensions.width10 * 10,
+                              height: Dimensions.width10 * 10,
+                              alignment: Alignment.topLeft,
+                              child: CircleAvatar(
+                                radius: Dimensions.width10 * 5,
+                                backgroundImage:
+                                    AssetImage('assets/images/user.jpg'),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                alignment: Alignment.topLeft,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.width10 * 1.5),
+                                  color: Colors.white,
+                                ),
+                                child: IconButton(
+                                  onPressed: () async {
+                                    await uploadProfile();
+                                  },
+                                  icon: Icon(Icons.add),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: Dimensions.width10,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
