@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 class HomeDisplayScreen extends StatelessWidget {
-  const HomeDisplayScreen({Key? key}) : super(key: key);
+  final String title;
+  final String imageUrl;
+  const HomeDisplayScreen(
+      {Key? key, required this.title, required this.imageUrl})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +17,8 @@ class HomeDisplayScreen extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
-            color: Colors.redAccent[200],
-          ),
-          child: const Text(
-            'Create a Design System',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 32,
-            ),
+            image: DecorationImage(
+                image: NetworkImage(imageUrl), fit: BoxFit.cover),
           ),
         ),
         SizedBox(
@@ -38,14 +35,15 @@ class HomeDisplayScreen extends StatelessWidget {
             SizedBox(
               width: Dimensions.width10 * 30,
               child: Text(
-                'Build with Figma : Create a design sytem -- Foundations',
+                title,
                 textAlign: TextAlign.start,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
           ],
         ),
         SizedBox(
-          height: 2,
+          height: Dimensions.height10,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

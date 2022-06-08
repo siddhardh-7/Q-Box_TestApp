@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/batches/live_classes_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
@@ -47,15 +48,42 @@ class _HomeState extends State<Home> {
               },
             ),
           ),
-          ListView.builder(
-            padding: EdgeInsets.all(Dimensions.padding20),
-            itemCount: 7,
-            shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return HomeDisplayScreen();
-            },
+
+          Container(
+            margin: EdgeInsets.all(Dimensions.padding20 / 2),
+            child: StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('videos').snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text("Loading");
+                  }
+                  return ListView(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      return HomeDisplayScreen(
+                          imageUrl: data['imageUrl'], title: data['title']);
+                    }).toList(),
+                  );
+                }),
           ),
+          // ListView.builder(
+          //   padding: EdgeInsets.all(Dimensions.padding20),
+          //   itemCount: 7,
+          //   shrinkWrap: true,
+          //   physics: ClampingScrollPhysics(),
+          //   itemBuilder: (context, index) {
+          //     return HomeDisplayScreen();
+          //   },
+          // ),
         ],
       ),
     ));

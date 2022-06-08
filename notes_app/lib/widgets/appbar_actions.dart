@@ -37,7 +37,11 @@ class AppBarActions extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        AppBarProfileIcon(),
+        GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, Profile.routeName);
+            },
+            child: AppBarProfileIcon()),
       ],
     );
   }
@@ -50,17 +54,12 @@ class AppBarProfileIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, Profile.routeName);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(right: Dimensions.padding20),
-        child: CircleAvatar(
-          radius: Dimensions.width10 * 1.6,
-          backgroundImage: AssetImage('assets/images/user.jpg'),
-        ),
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.only(right: Dimensions.padding20),
+      child: CircleAvatar(
+        radius: Dimensions.width10 * 1.6,
+        backgroundImage: AssetImage('assets/images/user.jpg'),
       ),
     );
   }
