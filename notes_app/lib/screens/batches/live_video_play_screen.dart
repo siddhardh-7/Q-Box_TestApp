@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-
-import '../../bin/video_player.dart';
 import '../../helpers/helpers.dart';
 import '../../provider/data_provider.dart';
 import '../../widgets/message_bubble.dart';
@@ -71,7 +69,9 @@ class _LiveVideoPlayScreenState extends State<LiveVideoPlayScreen> {
           ),
         ),
         actions: <Widget>[
-          AppBarProfileIcon(),
+          AppBarProfileIcon(
+            profileRadius: Dimensions.width10,
+          ),
         ],
       ),
       body: SafeArea(

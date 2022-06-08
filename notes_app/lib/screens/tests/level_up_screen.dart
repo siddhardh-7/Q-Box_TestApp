@@ -33,7 +33,9 @@ class LevelUptestsScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          AppBarProfileIcon(),
+          AppBarProfileIcon(
+            profileRadius: Dimensions.width10,
+          ),
         ],
       ),
       body: SafeArea(

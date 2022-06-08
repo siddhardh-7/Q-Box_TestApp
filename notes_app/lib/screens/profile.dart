@@ -1,13 +1,14 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/provider/get_user_details.dart';
 import 'package:notes_app/helpers/auth_path.dart';
 import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/appbar_actions.dart';
 
 class Profile extends StatefulWidget {
   static String routeName = "profile";
@@ -47,6 +48,7 @@ class _ProfileState extends State<Profile> {
   // }
 
   Future uploadProfile() async {
+    String? errorMessage;
     final results = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       allowedExtensions: ['jpg', 'png'],
@@ -59,10 +61,11 @@ class _ProfileState extends State<Profile> {
       return null;
     }
     final path = results.files.single.path;
+    final fileName = results.files.single.name;
     File file = File(path!);
     String userEmail = user!.email.toString();
     final userProfileUrl =
-        userProfileUrlRef.child('users/$userEmail/UserProfile.jpg');
+        userProfileUrlRef.child('users/$userEmail/UserProfile.jpeg');
     await userProfileUrl.putFile(file).snapshotEvents.listen((taskSnapshot) {
       switch (taskSnapshot.state) {
         case TaskState.running:
@@ -82,6 +85,28 @@ class _ProfileState extends State<Profile> {
           break;
       }
     });
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userEmail)
+          .update({
+            'profileImageName': fileName,
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case "too-many-requests":
+          errorMessage = "Too many requests";
+          break;
+        case "operation-not-allowed":
+          errorMessage = "Signing in with Email and Password is not enabled.";
+          break;
+        default:
+          errorMessage = "An undefined Error happened.";
+      }
+      Fluttertoast.showToast(msg: errorMessage!);
+    }
   }
 
   @override
@@ -123,15 +148,8 @@ class _ProfileState extends State<Profile> {
                         height: Dimensions.width10 * 10,
                         child: Stack(
                           children: [
-                            Container(
-                              width: Dimensions.width10 * 10,
-                              height: Dimensions.width10 * 10,
-                              alignment: Alignment.topLeft,
-                              child: CircleAvatar(
-                                radius: Dimensions.width10 * 5,
-                                backgroundImage:
-                                    AssetImage('assets/images/user.jpg'),
-                              ),
+                            AppBarProfileIcon(
+                              profileRadius: Dimensions.width10 * 5,
                             ),
                             Align(
                               alignment: Alignment.bottomRight,
@@ -266,22 +284,22 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-
-class UserPerson {
-  String email;
-  final String firstName;
-  final String lastName;
-  final int age;
-
-  UserPerson(
-      {this.email = '',
-      required this.firstName,
-      required this.lastName,
-      required this.age});
-  Map<String, dynamic> toJson() => {
-        'email': email,
-        'firstName': firstName,
-        'lastName': lastName,
-        'age': age,
-      };
-}
+//
+// class UserPerson {
+//   String email;
+//   final String firstName;
+//   final String lastName;
+//   final int age;
+//
+//   UserPerson(
+//       {this.email = '',
+//       required this.firstName,
+//       required this.lastName,
+//       required this.age});
+//   Map<String, dynamic> toJson() => {
+//         'email': email,
+//         'firstName': firstName,
+//         'lastName': lastName,
+//         'age': age,
+//       };
+// }

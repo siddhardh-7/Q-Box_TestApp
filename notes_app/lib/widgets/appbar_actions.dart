@@ -39,42 +39,71 @@ class AppBarActions extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, Profile.routeName);
-            },
-            child: AppBarProfileIcon()),
+        Container(
+          margin: EdgeInsets.only(right: Dimensions.width10),
+          child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Profile.routeName);
+              },
+              child: AppBarProfileIcon(
+                profileRadius: Dimensions.width10 * 2,
+              )),
+        ),
       ],
     );
   }
 }
 
-class AppBarProfileIcon extends StatelessWidget {
+class AppBarProfileIcon extends StatefulWidget {
+  final profileRadius;
+  AppBarProfileIcon({Key? key, required this.profileRadius}) : super(key: key);
+
+  @override
+  State<AppBarProfileIcon> createState() => _AppBarProfileIconState();
+}
+
+class _AppBarProfileIconState extends State<AppBarProfileIcon> {
   Future<String> getUserImagePath() async {
     final user = await FirebaseAuth.instance.currentUser;
     String userEmail = user!.email.toString();
     print(userEmail);
     final userRef = await FirebaseStorage.instance.ref();
-    String urlPath = 'users/${userEmail}/userProfile.jpeg';
+    String urlPath = 'users/${userEmail}/UserProfile.jpeg';
     final userProfileUrl = await userRef.child(urlPath).getDownloadURL();
     print(userProfileUrl);
 
     return userProfileUrl;
   }
 
-  const AppBarProfileIcon({
-    Key? key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.only(right: Dimensions.padding20),
-      child: CircleAvatar(
-        radius: Dimensions.width10 * 1.6,
-        backgroundImage: AssetImage('assets/images/user.jpg'),
+      width: widget.profileRadius * 2,
+      height: widget.profileRadius * 2,
+      // margin: EdgeInsets.only(right: Dimensions.padding20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.circular(Dimensions.borderRadius5 * 20),
       ),
+      child: FutureBuilder(
+          future: getUserImagePath(),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              return CircleAvatar(
+                backgroundImage: NetworkImage(
+                  snapshot.data!,
+                ),
+              );
+            }
+            if (snapshot.hasError) {
+              print(snapshot.error);
+            }
+            return Icon(
+              Icons.person,
+              size: (24 / 40) * widget.profileRadius * 2,
+            );
+          }),
     );
   }
 }
