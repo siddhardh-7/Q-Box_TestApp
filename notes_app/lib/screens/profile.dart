@@ -28,25 +28,6 @@ class _ProfileState extends State<Profile> {
     await _auth.signOut();
   }
 
-  // UserPerson fromJson(Map<String, dynamic> json) => UserPerson(
-  //       email: json['email'],
-  //       firstName: json['firstName'],
-  //       lastName: json['lastName'],
-  //       age: json['age'],
-  //     );
-  //
-  // Future<UserPerson?> getDocId() async {
-  //   final docUser = await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(user.toString());
-  //   final snapshot = await docUser.get();
-  //   if (snapshot.exists) {
-  //     return fromJson(snapshot.data()!);
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
   Future uploadProfile() async {
     String? errorMessage;
     final results = await FilePicker.platform.pickFiles(
@@ -181,35 +162,6 @@ class _ProfileState extends State<Profile> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GetUserName(documentId: user!.email.toString()),
-                          // FutureBuilder<UserPerson?>(
-                          //   future: getDocId(),
-                          //   builder: (context, snapshot) {
-                          //     if (snapshot.hasError) {
-                          //       return Text(
-                          //           'Something went wrong!.${snapshot.error}');
-                          //     } else if (snapshot.hasData) {
-                          //       final user = snapshot.data;
-                          //       return user == null
-                          //           ? Text('No User')
-                          //           : Text(
-                          //               user.firstName,
-                          //               style: TextStyle(
-                          //                 fontSize: 24,
-                          //                 fontWeight: FontWeight.bold,
-                          //               ),
-                          //             );
-                          //     } else {
-                          //       return Text(
-                          //         'loading.....',
-                          //         style: TextStyle(
-                          //           fontSize: 24,
-                          //           fontWeight: FontWeight.bold,
-                          //         ),
-                          //       );
-                          //     }
-                          //   },
-                          // ),
-
                           Text(
                             "${user?.email.toString()}",
                             style: TextStyle(
@@ -284,22 +236,3 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-//
-// class UserPerson {
-//   String email;
-//   final String firstName;
-//   final String lastName;
-//   final int age;
-//
-//   UserPerson(
-//       {this.email = '',
-//       required this.firstName,
-//       required this.lastName,
-//       required this.age});
-//   Map<String, dynamic> toJson() => {
-//         'email': email,
-//         'firstName': firstName,
-//         'lastName': lastName,
-//         'age': age,
-//       };
-// }

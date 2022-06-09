@@ -38,14 +38,3 @@ class GetUserName extends StatelessWidget {
     );
   }
 }
-
-// Future<UserModel?> GetUserModel(String? documentId) async {
-//   final docData =
-//       FirebaseFirestore.instance.collection('users').doc(documentId);
-//   final snapshot = await docData.get();
-//
-//   if (snapshot.exists) {
-//     return UserModel.fromJson(snapshot.data()!);
-//   }
-//   return null;
-// }

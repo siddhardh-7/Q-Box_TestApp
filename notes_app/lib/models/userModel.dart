@@ -26,7 +26,7 @@ class UserModel {
             firstName: json['firstName']! as String,
             lastName: json['lastName']! as String,
             email: json['email']! as String,
-            profileImageName: json['profileImageName']! as String,
+            profileImageName: json['profileImageName'] as String,
             age: json['age']! as int);
 
   Map<String, dynamic> toJson() {

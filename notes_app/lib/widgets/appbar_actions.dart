@@ -65,7 +65,8 @@ class AppBarProfileIcon extends StatefulWidget {
 }
 
 class _AppBarProfileIconState extends State<AppBarProfileIcon> {
-  Future<String?> GetUserProfileName(String? documentId) async {
+  Future<String?> GetUserProfileName(
+      String? documentId, String profileImageName) async {
     // await FirebaseFirestore.instance
     //     .collection('users')
     //     .doc(documentId)
@@ -84,10 +85,10 @@ class _AppBarProfileIconState extends State<AppBarProfileIcon> {
     final snapshot = await docData.get();
 
     if (snapshot.exists) {
-      print(snapshot.data());
-      UserModel UserCurr = UserModel.fromJson(snapshot.data()!);
-      print(UserCurr.profileImageName);
-      return UserCurr.profileImageName;
+      var data = snapshot.data() as Map<String, dynamic>;
+      // UserModel UserCurr = UserModel.fromJson(snapshot.data()!);
+      // print('profile url  == ${UserCurr.profileImageName}');
+      return data[profileImageName] as String;
     }
   }
 
@@ -95,13 +96,9 @@ class _AppBarProfileIconState extends State<AppBarProfileIcon> {
     final user = await FirebaseAuth.instance.currentUser;
     final userRef = await FirebaseStorage.instance.ref();
     String userEmail = user!.email.toString();
-    print(userEmail);
-    String? fileName = await GetUserProfileName(userEmail);
-    print(fileName);
+    String? fileName = await GetUserProfileName(userEmail, 'profileImageName');
     String urlPath = 'users/${userEmail}/UserProfile/${fileName}';
-    print(urlPath);
     final userProfileUrl = await userRef.child(urlPath).getDownloadURL();
-    print(userProfileUrl);
     return userProfileUrl;
   }
 

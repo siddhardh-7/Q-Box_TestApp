@@ -396,6 +396,7 @@ class _SignUpState extends State<SignUp> {
             .set(UserModel(
                     firstName: _firstNameController.text.trim(),
                     lastName: _lastNameController.text.trim(),
+                    age: int.parse(_ageController.text.trim()),
                     email: _emailController.text.trim())
                 .toJson())
             .then((value) => print("User Added"))
