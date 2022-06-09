@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/models/userModel.dart';
 import 'package:notes_app/screens/profile.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
@@ -63,15 +65,43 @@ class AppBarProfileIcon extends StatefulWidget {
 }
 
 class _AppBarProfileIconState extends State<AppBarProfileIcon> {
+  Future<String?> GetUserProfileName(String? documentId) async {
+    // await FirebaseFirestore.instance
+    //     .collection('users')
+    //     .doc(documentId)
+    //     .get()
+    //     .then((DocumentSnapshot documentSnapshot) {
+    //   if (documentSnapshot.exists) {
+    //     var data = documentSnapshot.data() as Map<String, dynamic>;
+    //     print(data);
+    //     String filePath = data['profileImageName']! as String;
+    //     print(filePath);
+    //     return filePath;
+    //   }
+    // });
+    final docData =
+        FirebaseFirestore.instance.collection('users').doc(documentId);
+    final snapshot = await docData.get();
+
+    if (snapshot.exists) {
+      print(snapshot.data());
+      UserModel UserCurr = UserModel.fromJson(snapshot.data()!);
+      print(UserCurr.profileImageName);
+      return UserCurr.profileImageName;
+    }
+  }
+
   Future<String> getUserImagePath() async {
     final user = await FirebaseAuth.instance.currentUser;
+    final userRef = await FirebaseStorage.instance.ref();
     String userEmail = user!.email.toString();
     print(userEmail);
-    final userRef = await FirebaseStorage.instance.ref();
-    String urlPath = 'users/${userEmail}/UserProfile.jpeg';
+    String? fileName = await GetUserProfileName(userEmail);
+    print(fileName);
+    String urlPath = 'users/${userEmail}/UserProfile/${fileName}';
+    print(urlPath);
     final userProfileUrl = await userRef.child(urlPath).getDownloadURL();
     print(userProfileUrl);
-
     return userProfileUrl;
   }
 
@@ -80,7 +110,6 @@ class _AppBarProfileIconState extends State<AppBarProfileIcon> {
     return Container(
       width: widget.profileRadius * 2,
       height: widget.profileRadius * 2,
-      // margin: EdgeInsets.only(right: Dimensions.padding20),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(Dimensions.borderRadius5 * 20),

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notes_app/models/userModel.dart';
 import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -392,12 +393,11 @@ class _SignUpState extends State<SignUp> {
         await FirebaseFirestore.instance
             .collection('users')
             .doc('${_email}')
-            .set({
-              'firstName': _firstNameController.text.trim(),
-              'lastName': _lastNameController.text.trim(),
-              'email': _emailController.text.trim(),
-              'age': int.parse(_ageController.text.trim()),
-            })
+            .set(UserModel(
+                    firstName: _firstNameController.text.trim(),
+                    lastName: _lastNameController.text.trim(),
+                    email: _emailController.text.trim())
+                .toJson())
             .then((value) => print("User Added"))
             .catchError((error) => print("Failed to add user: $error"));
       } on FirebaseAuthException catch (error) {

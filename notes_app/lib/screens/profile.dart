@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile> {
     File file = File(path!);
     String userEmail = user!.email.toString();
     final userProfileUrl =
-        userProfileUrlRef.child('users/$userEmail/UserProfile.jpeg');
+        userProfileUrlRef.child('users/${userEmail}/UserProfile/${fileName}');
     await userProfileUrl.putFile(file).snapshotEvents.listen((taskSnapshot) {
       switch (taskSnapshot.state) {
         case TaskState.running:
@@ -105,7 +105,7 @@ class _ProfileState extends State<Profile> {
         default:
           errorMessage = "An undefined Error happened.";
       }
-      Fluttertoast.showToast(msg: errorMessage!);
+      Fluttertoast.showToast(msg: errorMessage);
     }
   }
 
@@ -180,7 +180,7 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          GetUserName(user!.email.toString()),
+                          GetUserName(documentId: user!.email.toString()),
                           // FutureBuilder<UserPerson?>(
                           //   future: getDocId(),
                           //   builder: (context, snapshot) {

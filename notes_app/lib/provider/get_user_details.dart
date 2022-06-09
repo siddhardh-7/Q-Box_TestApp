@@ -2,9 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GetUserName extends StatelessWidget {
-  final String documentId;
-
-  GetUserName(this.documentId);
+  final String? documentId;
+  GetUserName({this.documentId});
 
   @override
   Widget build(BuildContext context) {
@@ -39,3 +38,14 @@ class GetUserName extends StatelessWidget {
     );
   }
 }
+
+// Future<UserModel?> GetUserModel(String? documentId) async {
+//   final docData =
+//       FirebaseFirestore.instance.collection('users').doc(documentId);
+//   final snapshot = await docData.get();
+//
+//   if (snapshot.exists) {
+//     return UserModel.fromJson(snapshot.data()!);
+//   }
+//   return null;
+// }
