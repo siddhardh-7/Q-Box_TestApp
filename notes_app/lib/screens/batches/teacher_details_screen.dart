@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/models/teacherModel.dart';
+import 'package:notes_app/models/videoModel.dart';
+import 'package:notes_app/screens/batches/completed_classes_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
-
 import './live_classes_screen.dart';
-
-import '../../helpers/helpers.dart';
 import '../../widgets/custom_button_full.dart';
 
 class TeacherDetailsScreen extends StatelessWidget {
   const TeacherDetailsScreen({Key? key}) : super(key: key);
   static const String routeName = '/teacher-details-screen';
-
-  final Map<String, String> teacherDetails = const {
-    'TeacherName': 'Name',
-    'Subject Name': 'Mathematics',
-    'Start Date': ' 22 April 2022',
-    'End Date': ' 25 April 2022',
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +77,29 @@ class TeacherDetailsScreen extends StatelessWidget {
                 ),
                 CustomButtonFull(
                   backColor: Colors.orange,
-                  onTaphandler: () {},
+                  onTaphandler: () async {
+                    List<VideoModel> completedVideoData = [];
+                    if (teacher.completedClasses != null) {
+                      for (var video in teacher.completedClasses!) {
+                        final snapshot = await video.get();
+                        if (snapshot.exists) {
+                          var data = snapshot.data() as Map<String, dynamic>;
+                          completedVideoData.add(VideoModel.fromJson(data));
+                        }
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('No classes Until Now'),
+                      ));
+                    }
+                    Navigator.pushNamed(
+                        context, CompletedClassesScreen.routeName,
+                        arguments: {
+                          'videosLists': completedVideoData,
+                          'teacherName': teacher.name,
+                          'subjectName': teacher.subjectName,
+                        });
+                  },
                   text: 'Completed Classes',
                 )
               ],

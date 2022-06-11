@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class VideoModel {
   String? imageUrl;
-  String? likes;
+  int? likes;
   String? title;
-  String? uploadDate;
+  Timestamp? uploadDate;
   String? videoLink;
 
   VideoModel(

@@ -145,6 +145,7 @@ class _LoginState extends State<Login> {
                             if (!regex.hasMatch(value)) {
                               return ("Enter Valid Password(Min. 6 Character)");
                             }
+                            return null;
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(

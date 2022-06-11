@@ -4,17 +4,11 @@ import 'package:notes_app/models/teacherModel.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 import './batch_details_screen.dart';
-import './batch_name_tile.dart';
+import '../../widgets/batch_name_tile.dart';
 
 class BatchesScreen extends StatelessWidget {
   const BatchesScreen({Key? key}) : super(key: key);
   static const String routeName = '/batches-screen';
-
-  final List<String> _batcheNames = const [
-    'Batch Name 1',
-    'Batch Name 2',
-    'Batch Name 3'
-  ];
 
   @override
   Widget build(BuildContext context) {

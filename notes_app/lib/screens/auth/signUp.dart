@@ -236,6 +236,7 @@ class _SignUpState extends State<SignUp> {
                             if (!regex.hasMatch(value)) {
                               return ("Enter Valid Password(Min. 6 Character)");
                             }
+                            return null;
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -279,6 +280,7 @@ class _SignUpState extends State<SignUp> {
                             if (!regex.hasMatch(value)) {
                               return ("Enter Valid Password(Min. 6 Character)");
                             }
+                            return null;
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(

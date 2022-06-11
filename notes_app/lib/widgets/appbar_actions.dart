@@ -85,6 +85,7 @@ class _AppBarProfileIconState extends State<AppBarProfileIcon> {
       // print('profile url  == ${UserCurr.profileImageName}');
       return data[profileImageName] as String;
     }
+    return null;
   }
 
   Future<String> getUserImagePath() async {

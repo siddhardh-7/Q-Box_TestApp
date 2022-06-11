@@ -5,11 +5,11 @@ import 'package:notes_app/bin/video_player.dart';
 import 'package:notes_app/helpers/auth_path.dart';
 import 'package:notes_app/screens/auth/login.dart';
 import 'package:notes_app/screens/auth/signUp.dart';
+import 'package:notes_app/screens/batches/completed_classes_screen.dart';
 import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/home/home_screen.dart';
 import 'package:notes_app/screens/profile.dart';
-import 'package:notes_app/screens/video_screen.dart';
 import 'package:provider/provider.dart';
 
 import './screens/tabs_screen.dart';
@@ -87,6 +87,7 @@ class _MyAppState extends State<MyApp> {
           Explore.routeName: (_) => Explore(),
           Profile.routeName: (_) => Profile(),
           AuthPath.routeName: (_) => AuthPath(),
+          CompletedClassesScreen.routeName: (_) => CompletedClassesScreen(),
         },
       ),
     );

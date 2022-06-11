@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/batches/batch_name_tile.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
 import './teacher_details_screen.dart';
-import './teacher_profile_card.dart';
+import '../../widgets/teacher_profile_card.dart';
 
 class BatcheDetailsScreen extends StatelessWidget {
   BatcheDetailsScreen({Key? key}) : super(key: key);
@@ -41,20 +39,22 @@ class BatcheDetailsScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(
                 horizontal: Dimensions.width10 * 1.5,
                 vertical: Dimensions.height10),
-            child: Column(
-              children: [
-                for (var teach in routeArgs['teachers'])
-                  TeacherProfileCard(
-                      text: teach.name,
-                      onTaphandler: () {
-                        Navigator.of(context).pushNamed(
-                            TeacherDetailsScreen.routeName,
-                            arguments: {
-                              'batchName': routeArgs['batchName'],
-                              'teacher': teach,
-                            });
-                      }),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (var teach in routeArgs['teachers'])
+                    TeacherProfileCard(
+                        text: teach.name,
+                        onTaphandler: () {
+                          Navigator.of(context).pushNamed(
+                              TeacherDetailsScreen.routeName,
+                              arguments: {
+                                'batchName': routeArgs['batchName'],
+                                'teacher': teach,
+                              });
+                        }),
+                ],
+              ),
             ),
           ),
         ),

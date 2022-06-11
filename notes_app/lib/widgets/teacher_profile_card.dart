@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
-import '../../widgets/custom_button.dart';
+import 'custom_button.dart';
 
 class TeacherProfileCard extends StatelessWidget {
   const TeacherProfileCard(
