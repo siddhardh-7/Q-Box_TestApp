@@ -9,6 +9,7 @@ import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/home/home_screen.dart';
 import 'package:notes_app/screens/profile.dart';
+import 'package:notes_app/screens/video_screen.dart';
 import 'package:provider/provider.dart';
 
 import './screens/tabs_screen.dart';

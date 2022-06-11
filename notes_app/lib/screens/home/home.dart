@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/batches/live_classes_screen.dart';
+import 'package:notes_app/screens/video_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/category_style.dart';
 import 'package:notes_app/widgets/home_display_screen.dart';
@@ -60,7 +61,7 @@ class _HomeState extends State<Home> {
                     return Text('Something went wrong');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("Loading");
+                    return Center(child: CircularProgressIndicator());
                   }
                   return ListView(
                     shrinkWrap: true,
@@ -69,8 +70,22 @@ class _HomeState extends State<Home> {
                         snapshot.data!.docs.map((DocumentSnapshot document) {
                       Map<String, dynamic> data =
                           document.data()! as Map<String, dynamic>;
-                      return HomeDisplayScreen(
-                          imageUrl: data['imageUrl'], title: data['title']);
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VideoScreen(
+                                        title: data['title'],
+                                        videoLink: data['videoLink'],
+                                      )));
+                        },
+                        child: HomeDisplayScreen(
+                          imageUrl: data['imageUrl'],
+                          title: data['title'],
+                          likes: data['likes'],
+                        ),
+                      );
                     }).toList(),
                   );
                 }),

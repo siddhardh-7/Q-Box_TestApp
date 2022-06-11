@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
@@ -34,14 +35,36 @@ class BatchesScreen extends StatelessWidget {
                 SizedBox(
                   height: Dimensions.height10 * 2,
                 ),
-                for (int i = 0; i < _batcheNames.length; i++)
-                  BatchNameListTile(
-                    batchName: _batcheNames[i],
-                    onTapHandler: () => Navigator.of(context)
-                        .pushNamed(BatcheDetailsScreen.routeName, arguments: {
-                      'batchName': _batcheNames[i],
+                StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('batches')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return ListView(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        children: snapshot.data!.docs
+                            .map((DocumentSnapshot document) {
+                          Map<String, dynamic> data =
+                              document.data()! as Map<String, dynamic>;
+                          return BatchNameListTile(
+                            batchName: data['title'],
+                            onTapHandler: () => Navigator.of(context).pushNamed(
+                                BatcheDetailsScreen.routeName,
+                                arguments: {
+                                  'batchName': data['title'],
+                                }),
+                          );
+                        }).toList(),
+                      );
                     }),
-                  ),
               ],
             ),
           ),

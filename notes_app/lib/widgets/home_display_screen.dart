@@ -4,8 +4,12 @@ import 'package:notes_app/utilities/dimensions.dart';
 class HomeDisplayScreen extends StatelessWidget {
   final String title;
   final String imageUrl;
+  final int likes;
   const HomeDisplayScreen(
-      {Key? key, required this.title, required this.imageUrl})
+      {Key? key,
+      required this.title,
+      required this.imageUrl,
+      required this.likes})
       : super(key: key);
 
   @override
@@ -50,7 +54,7 @@ class HomeDisplayScreen extends StatelessWidget {
           children: [
             SizedBox(),
             Text('Figma '),
-            Text('44K Likes'),
+            Text('${likes} Likes'),
             Text('4 minutes ago'),
             SizedBox(),
           ],
