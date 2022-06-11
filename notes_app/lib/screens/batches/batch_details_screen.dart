@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/batches/batch_name_tile.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -6,14 +8,8 @@ import './teacher_details_screen.dart';
 import './teacher_profile_card.dart';
 
 class BatcheDetailsScreen extends StatelessWidget {
-  const BatcheDetailsScreen({Key? key}) : super(key: key);
+  BatcheDetailsScreen({Key? key}) : super(key: key);
   static const String routeName = '/batches-details-screen';
-
-  final List<String> _teacherNames = const [
-    'Teacher 1',
-    'Teacher 2',
-    'Teacher 3'
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +27,11 @@ class BatcheDetailsScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          AppBarProfileIcon(
-            profileRadius: Dimensions.width10,
+          Container(
+            margin: EdgeInsets.only(right: Dimensions.width10),
+            child: AppBarProfileIcon(
+              profileRadius: Dimensions.width10 * 2,
+            ),
           ),
         ],
       ),
@@ -44,14 +43,15 @@ class BatcheDetailsScreen extends StatelessWidget {
                 vertical: Dimensions.height10),
             child: Column(
               children: [
-                for (int i = 0; i < _teacherNames.length; i++)
+                for (var teach in routeArgs['teachers'])
                   TeacherProfileCard(
-                      text: _teacherNames[i],
+                      text: teach.name,
                       onTaphandler: () {
                         Navigator.of(context).pushNamed(
                             TeacherDetailsScreen.routeName,
                             arguments: {
                               'batchName': routeArgs['batchName'],
+                              'teacher': teach,
                             });
                       }),
               ],

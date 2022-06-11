@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/models/teacherModel.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -22,7 +23,7 @@ class TeacherDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final routeArgs =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-
+    TeacherModel teacher = routeArgs['teacher'];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -34,8 +35,11 @@ class TeacherDetailsScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          AppBarProfileIcon(
-            profileRadius: Dimensions.width10,
+          Container(
+            margin: EdgeInsets.only(right: Dimensions.width10),
+            child: AppBarProfileIcon(
+              profileRadius: Dimensions.width10 * 2,
+            ),
           ),
         ],
       ),
@@ -49,20 +53,21 @@ class TeacherDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: teacherDetails.entries
-                      .map(
-                        (entry) => Padding(
-                          padding: EdgeInsets.all(Dimensions.padding20 / 3.33),
-                          child: Text(
-                            '${entry.key} : ${entry.value}',
-                            style: HelperFunctions.textStyleCard(),
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      )
-                      .toList(),
+                Text(
+                  'Teacher Name : ${teacher.name.toString().toUpperCase()}',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Subject Name : ${teacher.subjectName.toString().toUpperCase()}',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Start Date : " " ',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'End Date : " " ',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: Dimensions.height10 * 6,

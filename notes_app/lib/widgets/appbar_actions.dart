@@ -42,13 +42,9 @@ class AppBarActions extends StatelessWidget {
         ),
         Container(
           margin: EdgeInsets.only(right: Dimensions.width10),
-          child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Profile.routeName);
-              },
-              child: AppBarProfileIcon(
-                profileRadius: Dimensions.width10 * 2,
-              )),
+          child: AppBarProfileIcon(
+            profileRadius: Dimensions.width10 * 2,
+          ),
         ),
       ],
     );
@@ -103,32 +99,37 @@ class _AppBarProfileIconState extends State<AppBarProfileIcon> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.profileRadius * 2,
-      height: widget.profileRadius * 2,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(Dimensions.borderRadius5 * 20),
-      ),
-      child: FutureBuilder(
-          future: getUserImagePath(),
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
-              return CircleAvatar(
-                backgroundImage: NetworkImage(
-                  snapshot.data!,
-                ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, Profile.routeName);
+      },
+      child: Container(
+        width: widget.profileRadius * 2,
+        height: widget.profileRadius * 2,
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(Dimensions.borderRadius5 * 20),
+        ),
+        child: FutureBuilder(
+            future: getUserImagePath(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                return CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    snapshot.data!,
+                  ),
+                );
+              }
+              if (snapshot.hasError) {
+                print(snapshot.error);
+              }
+              return Icon(
+                Icons.person,
+                size: (24 / 40) * widget.profileRadius * 2,
               );
-            }
-            if (snapshot.hasError) {
-              print(snapshot.error);
-            }
-            return Icon(
-              Icons.person,
-              size: (24 / 40) * widget.profileRadius * 2,
-            );
-          }),
+            }),
+      ),
     );
   }
 }

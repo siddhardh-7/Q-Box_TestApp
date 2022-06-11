@@ -49,7 +49,6 @@ class _HomeState extends State<Home> {
               },
             ),
           ),
-
           Container(
             margin: EdgeInsets.all(Dimensions.padding20 / 2),
             child: StreamBuilder<QuerySnapshot>(
@@ -90,15 +89,6 @@ class _HomeState extends State<Home> {
                   );
                 }),
           ),
-          // ListView.builder(
-          //   padding: EdgeInsets.all(Dimensions.padding20),
-          //   itemCount: 7,
-          //   shrinkWrap: true,
-          //   physics: ClampingScrollPhysics(),
-          //   itemBuilder: (context, index) {
-          //     return HomeDisplayScreen();
-          //   },
-          // ),
         ],
       ),
     ));

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/models/teacherModel.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 import './batch_details_screen.dart';
@@ -55,13 +56,26 @@ class BatchesScreen extends StatelessWidget {
                           Map<String, dynamic> data =
                               document.data()! as Map<String, dynamic>;
                           return BatchNameListTile(
-                            batchName: data['title'],
-                            onTapHandler: () => Navigator.of(context).pushNamed(
-                                BatcheDetailsScreen.routeName,
-                                arguments: {
-                                  'batchName': data['title'],
-                                }),
-                          );
+                              batchName: data['title'],
+                              onTapHandler: () async {
+                                List<TeacherModel> teachersData = [];
+                                for (var teacher in data['teachers']) {
+                                  final snapshot = await teacher.get();
+
+                                  if (snapshot.exists) {
+                                    var data =
+                                        snapshot.data() as Map<String, dynamic>;
+                                    teachersData
+                                        .add(TeacherModel.fromJson(data));
+                                  }
+                                }
+                                Navigator.of(context).pushNamed(
+                                    BatcheDetailsScreen.routeName,
+                                    arguments: {
+                                      'batchName': data['title'],
+                                      'teachers': teachersData,
+                                    });
+                              });
                         }).toList(),
                       );
                     }),

@@ -26,8 +26,8 @@ class TeacherProfileCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const SizedBox(
-            height: 80,
+          SizedBox(
+            height: Dimensions.height10 * 8,
           ),
           Align(
             alignment: Alignment.center,

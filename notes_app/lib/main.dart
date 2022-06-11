@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
           HomeScreen.routeName: (_) => const HomeScreen(),
           Practice.routeName: (_) => const Practice(),
           BatchesScreen.routeName: (_) => const BatchesScreen(),
-          BatcheDetailsScreen.routeName: (_) => const BatcheDetailsScreen(),
+          BatcheDetailsScreen.routeName: (_) => BatcheDetailsScreen(),
           TeacherDetailsScreen.routeName: (_) => const TeacherDetailsScreen(),
           TestsScreen.routeName: (_) => const TestsScreen(),
           LevelUptestsScreen.routeName: (_) => const LevelUptestsScreen(),
