@@ -203,7 +203,7 @@ class _PracticeState extends State<Practice> {
                         const Spacer(),
                         CustomButton(
                           backColor: Colors.purple,
-                          onTaphandler: () {
+                          onTapHandler: () {
                             setState(() {
                               isVideoSolenabled = !isVideoSolenabled;
                             });
@@ -224,7 +224,7 @@ class _PracticeState extends State<Practice> {
                           // backColor: Color(0xffFAD207),
                           backColor: Colors.orange,
                           text: 'Mark as Imp',
-                          onTaphandler: _allSelectedChoices[questionNumber] == 0
+                          onTapHandler: _allSelectedChoices[questionNumber] == 0
                               ? () {}
                               : () {
                                   setState(() {
@@ -243,7 +243,7 @@ class _PracticeState extends State<Practice> {
                         const Spacer(),
                         CustomButton(
                           backColor: const Color(0xff0CBC8B),
-                          onTaphandler: () {
+                          onTapHandler: () {
                             if (questionNumber != 0) {
                               setState(() {
                                 questionNumber--;
@@ -256,7 +256,7 @@ class _PracticeState extends State<Practice> {
                         const Spacer(),
                         CustomButton(
                           backColor: const Color(0xff000088),
-                          onTaphandler: () {
+                          onTapHandler: () {
                             if (questionNumber < questions.length - 1) {
                               setState(() {
                                 questionNumber++;

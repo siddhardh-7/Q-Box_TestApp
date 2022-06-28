@@ -40,7 +40,7 @@ class TeacherProfileCard extends StatelessWidget {
           const Spacer(),
           CustomButton(
             backColor: Colors.pink,
-            onTaphandler: () {
+            onTapHandler: () {
               onTaphandler();
             },
             text: 'Follow',

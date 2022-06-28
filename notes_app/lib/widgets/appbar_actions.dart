@@ -117,6 +117,7 @@ class _AppBarProfileIconState extends State<AppBarProfileIcon> {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
                 return CircleAvatar(
+                  radius: widget.profileRadius,
                   backgroundImage: NetworkImage(
                     snapshot.data!,
                   ),

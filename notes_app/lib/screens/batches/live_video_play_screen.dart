@@ -1,5 +1,4 @@
 import 'package:flick_video_player/flick_video_player.dart';
-import 'package:notes_app/screens/tabs_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 import 'package:provider/provider.dart';
@@ -47,30 +46,18 @@ class _LiveVideoPlayScreenState extends State<LiveVideoPlayScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.white,
-        title: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(left: Dimensions.padding20),
-          child: FittedBox(
-            fit: BoxFit.fitWidth,
-            child: TextButton(
-              onPressed: () {
-                Navigator.popAndPushNamed(context, TabsScreen.routeName);
-              },
-              child: Text(
-                'Live Video',
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+        title: FittedBox(
+          child: Text(
+            'Live Video',
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
         ),
-        actions: <Widget>[
-          AppBarProfileIcon(
-            profileRadius: Dimensions.width10,
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: Dimensions.width10),
+            child: AppBarProfileIcon(
+              profileRadius: Dimensions.width10 * 2,
+            ),
           ),
         ],
       ),

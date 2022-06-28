@@ -41,6 +41,7 @@ class _CompletedClassesScreenState extends State<CompletedClassesScreen> {
                   children: [
                     for (VideoModel singleVideo in videos)
                       HomeDisplayScreen(
+                          videoLink: singleVideo.videoLink!,
                           title: singleVideo.title!,
                           imageUrl: singleVideo.imageUrl!,
                           likes: singleVideo.likes!),

@@ -97,7 +97,7 @@ class TeacherDetailsScreen extends StatelessWidget {
                         arguments: {
                           'videosLists': completedVideoData,
                           'teacherName': teacher.name,
-                          'subjectName': teacher.subjectName,
+                          'subjectName': routeArgs['batchName'],
                         });
                   },
                   text: 'Completed Classes',

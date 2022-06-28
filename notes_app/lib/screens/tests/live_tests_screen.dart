@@ -36,7 +36,7 @@ class LiveTestsScreen extends StatelessWidget {
           alignment: Alignment.center,
           child: CustomButton(
             backColor: Theme.of(context).primaryColor,
-            onTaphandler: () {
+            onTapHandler: () {
               _pageController.animateToPage(2,
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeIn);
@@ -71,7 +71,7 @@ class LiveTestsScreen extends StatelessWidget {
           alignment: Alignment.center,
           child: CustomButton(
             backColor: Theme.of(context).primaryColor,
-            onTaphandler: () {
+            onTapHandler: () {
               Navigator.of(context).pushNamed(TestStartScreen.routeName);
             },
             text: 'Start Test',

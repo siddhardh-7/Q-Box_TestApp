@@ -9,6 +9,8 @@ import 'package:notes_app/screens/batches/completed_classes_screen.dart';
 import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/home/home_screen.dart';
+import 'package:notes_app/screens/payments/checkout_page.dart';
+import 'package:notes_app/screens/payments/payment_option.dart';
 import 'package:notes_app/screens/profile.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +65,7 @@ class _MyAppState extends State<MyApp> {
           primaryColor: const Color(0xFFFFC600),
           primarySwatch: Colors.amber,
         ),
-        home: AuthPath(),
+        home: PaymentOption(),
         routes: {
           TabsScreen.routeName: (_) => const TabsScreen(),
           Home.routeName: (_) => Home(),
@@ -73,7 +75,7 @@ class _MyAppState extends State<MyApp> {
           BatcheDetailsScreen.routeName: (_) => BatcheDetailsScreen(),
           TeacherDetailsScreen.routeName: (_) => const TeacherDetailsScreen(),
           TestsScreen.routeName: (_) => const TestsScreen(),
-          LevelUptestsScreen.routeName: (_) => const LevelUptestsScreen(),
+          LevelUpTestsScreen.routeName: (_) => LevelUpTestsScreen(),
           FullLengthTestsScreen.routeName: (_) => const FullLengthTestsScreen(),
           LiveTestsScreen.routeName: (_) => LiveTestsScreen(),
           TestStartScreen.routeName: (_) => const TestStartScreen(),
@@ -88,6 +90,8 @@ class _MyAppState extends State<MyApp> {
           Profile.routeName: (_) => Profile(),
           AuthPath.routeName: (_) => AuthPath(),
           CompletedClassesScreen.routeName: (_) => CompletedClassesScreen(),
+          PaymentOption.routeName: (_) => PaymentOption(),
+          CheckOut.routeName: (_) => CheckOut(),
         },
       ),
     );

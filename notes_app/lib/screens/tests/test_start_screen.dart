@@ -192,7 +192,7 @@ class _TestStartScreenState extends State<TestStartScreen> {
                         const Spacer(),
                         CustomButton(
                           backColor: Colors.purple,
-                          onTaphandler: () {
+                          onTapHandler: () {
                             setState(() {
                               _allSelectedChoices[questionNumber] = 2;
                             });
@@ -206,7 +206,7 @@ class _TestStartScreenState extends State<TestStartScreen> {
                               // backColor: Color(0xffFAD207),
                               backColor: const Color(0xff076AFE),
                               text: 'Submit',
-                              onTaphandler: () {}),
+                              onTapHandler: () {}),
                         const Spacer(),
                       ],
                     ),
@@ -218,7 +218,7 @@ class _TestStartScreenState extends State<TestStartScreen> {
                         const Spacer(),
                         CustomButton(
                           backColor: const Color(0xff0CBC8B),
-                          onTaphandler: () {
+                          onTapHandler: () {
                             if (questionNumber != 0) {
                               setState(() {
                                 questionNumber--;
@@ -231,7 +231,7 @@ class _TestStartScreenState extends State<TestStartScreen> {
                         const Spacer(),
                         CustomButton(
                           backColor: const Color(0xff000088),
-                          onTaphandler: () {
+                          onTapHandler: () {
                             if (questionNumber < questions.length - 1) {
                               setState(() {
                                 questionNumber++;

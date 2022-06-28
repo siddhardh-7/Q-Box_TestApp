@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/utilities/dimensions.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
     Key? key,
     required this.backColor,
-    required this.onTaphandler,
+    required this.onTapHandler,
     required this.text,
   }) : super(key: key);
 
   final Color backColor;
   final String text;
-  final Function onTaphandler;
+  final Function onTapHandler;
 
-  TextStyle _textstyleWhite() {
+  TextStyle _textStyleWhite() {
     return TextStyle(
       fontSize: 17.0,
       fontWeight: FontWeight.w500,
@@ -22,25 +23,22 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onTaphandler();
-      },
+    return Container(
+      width: MediaQuery.of(context).size.width / 2 - (30),
       child: Material(
-        elevation: 4.0,
-        borderRadius: BorderRadius.circular(8.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width / 2 - (30),
-          padding: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            color: backColor,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: GestureDetector(
+        color: backColor,
+        elevation: 4,
+        borderRadius: BorderRadius.circular(Dimensions.borderRadius5),
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width / 2 - (30),
+          onPressed: () {
+            onTapHandler();
+          },
+          child: FittedBox(
             child: Text(
               text,
               textAlign: TextAlign.center,
-              style: _textstyleWhite(),
+              style: _textStyleWhite(),
             ),
           ),
         ),

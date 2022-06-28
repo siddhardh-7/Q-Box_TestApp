@@ -34,7 +34,7 @@ class TestsScreen extends StatelessWidget {
                   backColor: Colors.purple,
                   onTaphandler: () {
                     Navigator.of(context)
-                        .pushNamed(LevelUptestsScreen.routeName);
+                        .pushNamed(LevelUpTestsScreen.routeName);
                   },
                   text: 'Level up series',
                 ),

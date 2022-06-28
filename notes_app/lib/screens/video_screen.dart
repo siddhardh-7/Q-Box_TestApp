@@ -34,12 +34,12 @@ class _VideoScreenState extends State<VideoScreen> {
           }).catchError((error) {
             print('Unexpected error1: $error');
           }));
-    _controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
+    // _controller = VideoPlayerController.network(
+    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
+    //   ..initialize().then((_) {
+    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //     setState(() {});
+    //   });
   }
 
   @override
@@ -61,13 +61,16 @@ class _VideoScreenState extends State<VideoScreen> {
           Container(
             height: Dimensions.height10 * 25,
             padding: EdgeInsets.all(Dimensions.padding20 / 4),
-            child: FlickVideoPlayer(
-              flickManager: flickManager,
-              flickVideoWithControls: FlickVideoWithControls(
-                controls: FlickPortraitControls(),
-              ),
-              flickVideoWithControlsFullscreen: FlickVideoWithControls(
-                controls: FlickLandscapeControls(),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(Dimensions.borderRadius5),
+              child: FlickVideoPlayer(
+                flickManager: flickManager,
+                flickVideoWithControls: FlickVideoWithControls(
+                  controls: FlickPortraitControls(),
+                ),
+                flickVideoWithControlsFullscreen: FlickVideoWithControls(
+                  controls: FlickLandscapeControls(),
+                ),
               ),
             ),
           ),
@@ -81,18 +84,18 @@ class _VideoScreenState extends State<VideoScreen> {
           // ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play();
-          });
-        },
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     setState(() {
+      //       _controller.value.isPlaying
+      //           ? _controller.pause()
+      //           : _controller.play();
+      //     });
+      //   },
+      //   child: Icon(
+      //     _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+      //   ),
+      // ),
     );
   }
 }

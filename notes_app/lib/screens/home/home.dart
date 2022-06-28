@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/batches/live_classes_screen.dart';
-import 'package:notes_app/screens/video_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/category_style.dart';
 import 'package:notes_app/widgets/home_display_screen.dart';
@@ -57,7 +56,7 @@ class _HomeState extends State<Home> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Something went wrong');
+                    return Text('Something went wrong!');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -70,16 +69,9 @@ class _HomeState extends State<Home> {
                       Map<String, dynamic> data =
                           document.data()! as Map<String, dynamic>;
                       return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VideoScreen(
-                                        title: data['title'],
-                                        videoLink: data['videoLink'],
-                                      )));
-                        },
+                        onTap: () {},
                         child: HomeDisplayScreen(
+                          videoLink: data['videoLink'],
                           imageUrl: data['imageUrl'],
                           title: data['title'],
                           likes: data['likes'],
